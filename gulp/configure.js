@@ -2,14 +2,16 @@
  * orchestrator.js links tasks in sequence
  */
 module.exports = function(gulp, runSequence) {
-  'use strict';
+    'use strict';
 
-  var pkg = require('../bower.json');
-  var dollar = require('gulp-load-plugins')({
-    pattern: ['gulp-*'],
-    camelize: true,
-    lazy: true
-  });
+    var pkg = require('../bower.json');
+
+    var args = require('get-gulp-args')();
+    var dollar = require('gulp-load-plugins')({
+        pattern: ['gulp-*'],
+        camelize: true,
+        lazy: true
+    });
 
   var SRC = 'src/**/*.js';
 
@@ -22,7 +24,11 @@ module.exports = function(gulp, runSequence) {
       JS_HINT_OPTS: {undef: true, globals:['angular', 'require']},
       JS_HINT_PREDEF: { },
       appTarget: pkg.name + '.js',
-      appTargetMin: pkg.name + '.min.js'
+      appTargetMin: pkg.name + '.min.js',
+      buildOptions : {
+          featureRevision: args.feature || false,
+          releaseRevision: args.release || false
+      }
   };
 
 // load script files
