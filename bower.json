@@ -26,6 +26,7 @@
     ".idea",
     "src",
     "gulpfile.js",
-    "gulp"
+    "gulp",
+    "demo"
   ]
 }

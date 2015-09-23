@@ -4,7 +4,7 @@
  *
  * Optional header allows overriding the property name with a value, must match the property keys
  *
- * myHeaderDataArray : {
+ * myHeaderData : {
  *    id:'User ID', name:'User Name', alt:'Nickname'
  * }
  *
@@ -18,14 +18,14 @@
  *    ngModule.controller(myController, ['csvDownload'])
  *  In your HTML
  *    <csv-download
- *      column-header-array="myHeaderDataArray"
+ *      column-header="myHeaderData"
  *      input-array="myInputArray"
  *      label="{{myLabel}}"
  *      filename="{{myFilename}}"></csv-download>
  *
- *      column-header-array:
+ *      column-header:
  *        Optional
- *        Bound Variable: e..g : $scope.myHeader = []; column-header-array="myHeader"
+ *        Bound Variable: e..g : $scope.myHeader = []; column-header="myHeader"
  *        If not defined, then defaults to the keys in the inputArray
  *        This is a bound variable for an array of column headers,
  *        the key matches the data array keys, the values are the headers.
@@ -68,7 +68,7 @@
       template: '<a href=\"{{hreflink}}\" download=\"{{filename}}\">{{label}}</a>', // TODO ng-href
       // <button ng-if=\"{{button}} === \'true\'\">{{label}}</button>
       scope: {
-        headerArray: '=',
+        columnHeade4r: '=',
         inputArray: '=',
         filename: '@filename',
         hreflink: '@hreflink',
@@ -82,22 +82,22 @@
       }
 
       var getHeader = function () {
-        if ($scope.headerArray) {
-          return $scope.headerArray;
+        if ($scope.columnHeade4r) {
+          return $scope.columnHeade4r;
         }
 
         // no header, so build it
-        $scope.headerArray = [];
+        $scope.columnHeade4r = [];
         // loop through all data in case some objects are incomplete
         for (var i in $scope.inputArray) {
           var keys = Object.keys($scope.inputArray[i]);
           for (var j in keys) {
             var key = keys[j];
-            $scope.headerArray[key] = key;
+            $scope.columnHeade4r[key] = key;
           }
         }
 
-        return $scope.headerArray;
+        return $scope.columnHeade4r;
       };
 
       // the biggest difference here is I'm using the header instead of the keys for the header row
