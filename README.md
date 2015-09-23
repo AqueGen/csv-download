@@ -3,8 +3,19 @@ Angular directive for exporting and downloading JSON data into a CSV file
 
 Code generation [based off of this example](http://halistechnology.com/2015/05/28/use-javascript-to-export-your-data-as-csv/).
 
-## Plunkr
-Rather than include a demo in the project, [created a Plunkr here](http://plunkr).
+# Git Repo
+[csv-download](https://github.com/pcimino/csv-download)
+
+## Demo  
+### Plunkr
+Demo is running in [Plunker here.](http://embed.plnkr.co/rTDfek/preview).
+
+### Run locally
+   - npm install
+   - npm start
+   - [http://127.0.0.1:8080](http://127.0.0.1:8080)
+
+(If you're using Markdown pad to view this README, open the link in an external browser)
 
 ## Usage  
 

@@ -27,6 +27,7 @@
     "src",
     "gulpfile.js",
     "gulp",
-    "demo"
+    "demo",
+    "node-server.js"
   ]
 }
