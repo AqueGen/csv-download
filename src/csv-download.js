@@ -66,7 +66,7 @@
             template: '<a href=\"{{hreflink}}\" download=\"{{filename}}\">{{label}}</a>', // TODO ng-href
             // <button ng-if=\"{{button}} === \'true\'\">{{label}}</button>
             scope: {
-                columnHeade4r: '=',
+                columnHeader: '=',
                 inputArray: '=',
                 filename: '@filename',
                 hreflink: '@hreflink',
@@ -80,22 +80,22 @@
             }
 
             var getHeader = function () {
-                if ($scope.columnHeade4r) {
-                    return $scope.columnHeade4r;
+                if ($scope.columnHeader) {
+                    return $scope.columnHeader;
                 }
 
                 // no header, so build it
-                $scope.columnHeade4r = [];
+                $scope.columnHeader = [];
                 // loop through all data in case some objects are incomplete
                 for (var i in $scope.inputArray) {
                     var keys = Object.keys($scope.inputArray[i]);
                     for (var j in keys) {
                         var key = keys[j];
-                        $scope.columnHeade4r[key] = key;
+                        $scope.columnHeader[key] = key;
                     }
                 }
 
-                return $scope.columnHeade4r;
+                return $scope.columnHeader;
             };
 
             // the biggest difference here is I'm using the header instead of the keys for the header row
