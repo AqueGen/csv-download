@@ -6,6 +6,10 @@ Code generation [based off of this example](http://halistechnology.com/2015/05/2
 # Git Repo
 [csv-download](https://github.com/pcimino/csv-download)
 
+# Bower Installation  
+
+    bower install ng-csv-download  
+
 ## Demo  
 ### Plunkr
 Demo is running in [Plunker here.](http://embed.plnkr.co/rTDfek/preview).
