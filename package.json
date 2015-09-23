@@ -1,6 +1,6 @@
 {
   "name": "csv-download",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Angular directive for generating CSV from JSON",
   "main": "csv-download.js",
   "author": "Paul L. Cimino",
