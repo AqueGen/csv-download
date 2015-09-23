@@ -28,6 +28,7 @@
     "gulpfile.js",
     "gulp",
     "demo",
-    "node-server.js"
+    "node-server.js",
+    "package.json"
   ]
 }
