@@ -1,10 +1,9 @@
-
 /**
  * Code generation based off of http://halistechnology.com/2015/05/28/use-javascript-to-export-your-data-as-csv/
  *
  * Optional header allows overriding the property name with a value, must match the property keys
  *
- * myHeaderDataArray : {
+ * myHeaderData : {
  *    id:'User ID', name:'User Name', alt:'Nickname'
  * }
  *
@@ -18,14 +17,14 @@
  *    ngModule.controller(myController, ['csvDownload'])
  *  In your HTML
  *    <csv-download
- *      column-header-array="myHeaderDataArray"
+ *      column-header="myHeaderData"
  *      input-array="myInputArray"
  *      label="{{myLabel}}"
  *      filename="{{myFilename}}"></csv-download>
  *
- *      column-header-array:
+ *      column-header:
  *        Optional
- *        Bound Variable: e..g : $scope.myHeader = []; column-header-array="myHeader"
+ *        Bound Variable: e..g : $scope.myHeader = []; column-header="myHeader"
  *        If not defined, then defaults to the keys in the inputArray
  *        This is a bound variable for an array of column headers,
  *        the key matches the data array keys, the values are the headers.
@@ -51,121 +50,123 @@
  *
  */
 (function () {
-  'use strict';
-  angular.module('tld.csvDownload', []).directive('csvDownload', [])
-    .config( [
-      '$compileProvider',
-      function( $compileProvider )
-      {
-        $compileProvider.aHrefSanitizationWhitelist(/^\s*(data):/);
-        // $compileProvider.aHrefSanitizationWhitelist(/^\s*(data|https?|ftp|mailto|chrome-extension):/);
-        // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
-      }]);
-  angular.module('tld.csvDownload').directive('csvDownload', function postLink($log) {
-    var directive = {
-      restrict: 'E',
-      transclude: true,
-      template: '<a href=\"{{hreflink}}\" download=\"{{filename}}\">{{label}}</a>', // TODO ng-href
-      // <button ng-if=\"{{button}} === \'true\'\">{{label}}</button>
-      scope: {
-        headerArray: '=',
-        inputArray: '=',
-        filename: '@filename',
-        hreflink: '@hreflink',
-        label: '@label'
-      }
-    };
-
-    directive.controller = function ($scope) {
-      if (undefined === $scope.label) {
-        $scope.label = "Download Data";
-      }
-
-      var getHeader = function () {
-        if ($scope.headerArray) {
-          return $scope.headerArray;
-        }
-
-        // no header, so build it
-        $scope.headerArray = [];
-        // loop through all data in case some objects are incomplete
-        for (var i in $scope.inputArray) {
-          var keys = Object.keys($scope.inputArray[i]);
-          for (var j in keys) {
-            var key = keys[j];
-            $scope.headerArray[key] = key;
-          }
-        }
-
-        return $scope.headerArray;
-      };
-
-      // the biggest difference here is I'm using the header instead of the keys for the header row
-      var convertArrayOfObjectsToCSV = function () {
-        var result, ctr, keys, columnDelimiter, lineDelimiter;
-
-        var header = getHeader() || null;
-        if (header === null) {
-          return null;
-        }
-
-        columnDelimiter = ',';
-        lineDelimiter = '\n';
-
-        keys = Object.keys(header);
-
-        result = '';
-        keys.forEach(function (key) {
-          var dataVal = header[key];
-          if (undefined === dataVal) {
-            dataVal = '';
-          }
-          result += dataVal + columnDelimiter;
-        });
-        result += columnDelimiter;
-        result += lineDelimiter;
-
-        $scope.inputArray.forEach(function (item) {
-          ctr = 0;
-          keys.forEach(function (key) {
-            if (ctr > 0) {
-              result += columnDelimiter;
+    'use strict';
+    angular.module('tld.csvDownload', []).directive('csvDownload', [])
+        .config([
+            '$compileProvider',
+            function ($compileProvider) {
+                $compileProvider.aHrefSanitizationWhitelist(/^\s*(data):/);
+                // $compileProvider.aHrefSanitizationWhitelist(/^\s*(data|https?|ftp|mailto|chrome-extension):/);
+                // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
+            }]);
+    angular.module('tld.csvDownload').directive('csvDownload', function postLink($log) {
+        var directive = {
+            restrict: 'E',
+            transclude: true,
+            template: '<a href=\"{{hreflink}}\" download=\"{{filename}}\">{{label}}</a>', // TODO ng-href
+            // <button ng-if=\"{{button}} === \'true\'\">{{label}}</button>
+            scope: {
+                columnHeade4r: '=',
+                inputArray: '=',
+                filename: '@filename',
+                hreflink: '@hreflink',
+                label: '@label'
             }
-            var dataVal = item[key];
-            if (undefined === dataVal) {
-              dataVal = '';
+        };
+
+        directive.controller = function ($scope) {
+            if (undefined === $scope.label) {
+                $scope.label = "Download Data";
             }
-            result += dataVal;
-            ctr++;
-          });
-          result += lineDelimiter;
-        });
 
-        return result;
-      };
+            var getHeader = function () {
+                if ($scope.columnHeade4r) {
+                    return $scope.columnHeade4r;
+                }
 
-      var generateCSVLink = function () {
-        var data, filename, link;
-        var csv = convertArrayOfObjectsToCSV();
-        if (csv === null) {
-          return;
-        }
+                // no header, so build it
+                $scope.columnHeade4r = [];
+                // loop through all data in case some objects are incomplete
+                for (var i in $scope.inputArray) {
+                    var keys = Object.keys($scope.inputArray[i]);
+                    for (var j in keys) {
+                        var key = keys[j];
+                        $scope.columnHeade4r[key] = key;
+                    }
+                }
 
-        filename = $scope.filename || 'export.csv';
+                return $scope.columnHeade4r;
+            };
 
-        if (!csv.match(/^data:text\/csv/i)) {
-          csv = 'data:text/csv;charset=utf-8,' + csv;
-        }
+            // the biggest difference here is I'm using the header instead of the keys for the header row
+            var convertArrayOfObjectsToCSV = function () {
+                var result, ctr, keys, columnDelimiter, lineDelimiter;
 
-        $scope.hreflink = encodeURI(csv);
+                var header = getHeader() || null;
+                if (header === null) {
+                    return null;
+                }
 
-      };
+                columnDelimiter = ',';
+                lineDelimiter = '\n';
 
-      generateCSVLink();
+                keys = Object.keys(header);
 
-    };
+                result = '';
+                keys.forEach(function (key) {
+                    var dataVal = header[key];
+                    if (undefined === dataVal) {
+                        dataVal = '';
+                    }
+                    result += '\"' + dataVal + '\"' + columnDelimiter; // handle embedded commas
+                });
+                result += columnDelimiter;
+                result += lineDelimiter;
 
-    return directive;
+                $scope.inputArray.forEach(function (item) {
+                    ctr = 0;
+                    keys.forEach(function (key) {
+                        if (ctr > 0) {
+                            result += columnDelimiter;
+                        }
+                        var dataVal = item[key];
+                        if (undefined === dataVal) {
+                            dataVal = '';
+                        }
+                        result += '\"' + dataVal + '\"'; // handle embedded commas
+                        ctr++;
+                    });
+                    result += lineDelimiter;
+                });
 
-  });
+                return result;
+            };
+
+            var generateCSVLink = function () {
+                var data, link;
+
+                if (undefined === $scope.filename) {
+                    $scope.filename = 'export.csv';
+                }
+
+                var csv = convertArrayOfObjectsToCSV();
+                if (csv === null) {
+                    return;
+                }
+
+                if (!csv.match(/^data:text\/csv/i)) {
+                    csv = 'data:text/csv;charset=utf-8,' + csv;
+                }
+
+                $scope.hreflink = encodeURI(csv);
+
+            };
+
+            generateCSVLink();
+
+        };
+
+        return directive;
+
+    });
 })();

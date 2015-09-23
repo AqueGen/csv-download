@@ -16,7 +16,7 @@
 
 
 <div ng-controller="Ctrl1">
-    <h2>All Attributes</h2>
+    <h2>All Attributes Set</h2>
     <csv-download
             filename="{{data.exportFilename}}"
             label="{{data.displayLabel}}"
@@ -25,7 +25,8 @@
     </csv-download>
 
     <hr />
-    <h2>All Defaults</h2>
+    <h2>Only Required Attribute Set</h2>
+    <h3>Optional Attributes Default</h3>
     <csv-download
             input-array="data.myInputArray">
     </csv-download>
