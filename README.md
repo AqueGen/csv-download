@@ -25,7 +25,7 @@ Demo is running in [Plunker here.](http://embed.plnkr.co/rTDfek/preview).
 
 In the app
 
-     ngModule.controller(myApp, ['csvDownload'])  
+     ngModule.controller(myApp, ['tld.csvDownload'])  
 
 In your HTML  
 
